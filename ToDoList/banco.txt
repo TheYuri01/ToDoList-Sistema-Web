@@ -1,34 +1,37 @@
 create database if not exists todolist;
 
-create table usuarios {
-    id      int auto_increment  primary_key,
-    nome    varchar(200),
-    email   varchar(200),
-    senha   varchar(200),
-    adm     boolean
-};
+CREATE TABLE usuarios (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(200),
+    email VARCHAR(200),
+    senha VARCHAR(200),
+    adm BOOLEAN
+);
 
-create table quadros {
-    id          int auto_increment  primary_key,
-    titulo      varchar(300),
-    favorito    boolean,
-    cor_quadro  varchar(100),
-    foreign_key (usuario_id) references usuarios(id)
-};
+CREATE TABLE quadros (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    usuario_id INT, 
+    titulo VARCHAR(300),
+    favorito BOOLEAN,
+    cor_quadro VARCHAR(100),
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
+);
 
-create table blocos {
-    id          int auto_increment  primary_key,
-    titulo      varchar(300),
-    cor_bloco   varchar(100),
-    foreign_key (quadro_id) references quadros(id)
-};
+CREATE TABLE blocos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    quadro_id INT,
+    titulo VARCHAR(300),
+    cor_bloco VARCHAR(100),
+    FOREIGN KEY (quadro_id) REFERENCES quadros(id)
+);
 
-create table tarefas {
-    id              int auto_increment  primary_key,
-    titulo          text,
-    descricao       text,
-    item            varchar(300),
-    status          varchar(50),
-    caminho_anexo   text,
-    foreign_key(bloco_id) references tarefas(id)        
-};
+CREATE TABLE tarefas (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    bloco_id INT,
+    titulo TEXT,
+    descricao TEXT,
+    item VARCHAR(300),
+    status VARCHAR(50),
+    caminho_anexo TEXT,
+    FOREIGN KEY (bloco_id) REFERENCES blocos(id)
+);
